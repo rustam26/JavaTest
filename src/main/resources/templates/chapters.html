@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Chapters</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootsrap.min.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container-fluid text-center">
+    <div><h1>Управление Главами</h1></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/chapters/new}">Добавить новую Главу</a>
+    </div>
+
+
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="alert-dark">
+            <tr>
+                <th>ID</th>
+                <th>Наименование Главы</th>
+                <th>Изменить/Удалить</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <th:block th:each="chp : ${allChapters}">
+            <tr>
+                <td>[[${chp.id}]]</td>
+                <td>[[${chp.name}]]</td>
+                <td>
+                    <a class="h4 m-3" th:href="@{'/chapters/edit/' + ${chp.id}}">Изменить</a>
+                    <a class="h4"  th:href="@{'/chapters/delete/' + ${chp.id}}">Удалить</a>
+                </td>
+            </tr>
+            </th:block>
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>
+</body>
+</html>
