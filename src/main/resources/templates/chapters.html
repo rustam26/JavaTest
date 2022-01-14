@@ -9,18 +9,20 @@
 <body>
 
 <div class="container-fluid text-center">
-    <div><h1>Управление Главами</h1></div>
-    <div class="m-2">
-        <a class="h3" th:href="@{/chapters/new}">Добавить новую Главу</a>
-    </div>
-
-
-    <div th:if="${message}" class="alert alert-success text-center">
+    <div class="shadow-sm p-3 mb-5 bg-white rounded"><h1>Управление Главами</h1></div>
+    <div th:if="${message}" class="alert alert-success text-center shadow-sm   bg-light rounded fs-3">
         [[${message}]]
     </div>
+
+    <div class="m-2">
+        <a  class="btn btn-primary" th:href="@{/chapters/new}">Добавить новую Главу</a>
+        <button type="button" class="btn btn-secondary" onclick="cancelForm()">Назад</button>
+
+    </div>
+
     <div>
-        <table class="table table-bordered">
-            <thead class="alert-dark">
+        <table class="table table-bordered  shadow-sm p-3 mb-5 bg-white rounded">
+            <thead class="table-info shadow-lg p-3 mb-5 bg-white rounded">
             <tr>
                 <th>ID</th>
                 <th>Наименование Главы</th>
@@ -31,11 +33,11 @@
 
             <th:block th:each="chp : ${allChapters}">
             <tr>
-                <td>[[${chp.id}]]</td>
+                <td class="table-info">[[${chp.id}]]</td>
                 <td>[[${chp.name}]]</td>
                 <td>
-                    <a class="h4 m-3" th:href="@{'/chapters/edit/' + ${chp.id}}">Изменить</a>
-                    <a class="h4"  th:href="@{'/chapters/delete/' + ${chp.id}}">Удалить</a>
+                    <a class="btn btn-primary m-2" th:href="@{'/chapters/edit/' + ${chp.id}}">Изменить</a>
+                    <a class="btn btn-danger"  th:href="@{'/chapters/delete/' + ${chp.id}}">Удалить</a>
                 </td>
             </tr>
             </th:block>
@@ -48,4 +50,9 @@
 
 </div>
 </body>
+<script type="text/javascript">
+    function cancelForm(){
+        window.location = "[[@{/}]]";
+    }
+</script>
 </html>

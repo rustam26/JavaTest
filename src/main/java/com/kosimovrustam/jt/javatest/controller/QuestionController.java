@@ -4,8 +4,10 @@ package com.kosimovrustam.jt.javatest.controller;
 
 
 
+import com.kosimovrustam.jt.javatest.entity.Chapter;
 import com.kosimovrustam.jt.javatest.entity.Question;
 import com.kosimovrustam.jt.javatest.exception.QuestionNotFoundException;
+import com.kosimovrustam.jt.javatest.service.ChapterService;
 import com.kosimovrustam.jt.javatest.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private ChapterService chapterService;
+
     @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public String showAllQuestions(Model model) {
         List<Question> allQuestions = questionService.getAllQuestions();
@@ -31,6 +36,10 @@ public class QuestionController {
 
     @GetMapping("/questions/new")
     public String showNewForm(Model model) {
+
+        List<Chapter> allChapterList = chapterService.getAllChapters();
+        model.addAttribute("allChapterList", allChapterList);
+
         model.addAttribute("question", new Question());
         model.addAttribute("pageTitle", "Добавление нового Вопроса");
         return "question_form";
@@ -49,6 +58,9 @@ public class QuestionController {
 
         try {
             Question question = questionService.getQuestion(id);
+
+            List<Chapter> allChapterList = chapterService.getAllChapters();
+            model.addAttribute("allChapterList", allChapterList);
 
             model.addAttribute("question", question);
             model.addAttribute("pageTitle", "Изменение Вопроса (ID: "+ id+")");

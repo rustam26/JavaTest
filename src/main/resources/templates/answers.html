@@ -2,27 +2,30 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Answers</title>
+    <title >Manage Answers</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootsrap.min.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
 
 <div class="container-fluid text-center">
-    <div><h1>Управление Ответами</h1></div>
-    <div class="m-2">
-        <a class="h3" th:href="@{/answers/new}">Добавить новый Ответ</a>
-    </div>
+    <div class="shadow-sm p-3 mb-5 bg-white rounded"><h1>Управление Ответами</h1></div>
 
-
-    <div th:if="${message}" class="alert alert-success text-center">
+    <div th:if="${message}" class="alert alert-success text-center shadow-sm bg-light rounded fs-3" >
         [[${message}]]
     </div>
+
+    <div class="m-2">
+        <a  class="btn btn-primary" th:href="@{/answers/new}">Добавить новый Ответ</a>
+    <button type="button" class="btn btn-secondary" onclick="cancelForm()">Назад</button>
+    </div>
+
+
     <div>
-        <table class="table table-bordered">
-            <thead class="alert-dark">
+        <table class="table table-bordered  shadow-sm p-3 mb-5 bg-white rounded">
+            <thead class="table-info shadow-lg p-3 mb-5 bg-white rounded">
             <tr>
-                <th>ID</th>
+                <th >ID</th>
                 <th>Ответ</th>
                 <th>Вопрос</th>
                 <th>Правильный Ответ</th>
@@ -33,13 +36,13 @@
 
             <th:block th:each="ans : ${allAnswers}">
             <tr>
-                <td>[[${ans.id}]]</td>
+                <td  class="table-info">[[${ans.id}]]</td>
                 <td>[[${ans.answerName}]]</td>
                 <td>[[${ans.question}]]</td>
                 <td>[[${ans.correctAnswer}]]</td>
-                <td>
-                    <a class="h4 m-3" th:href="@{'/answers/edit/' + ${ans.id}}">Изменить</a>
-                    <a class="h4"  th:href="@{'/answers/delete/' + ${ans.id}}">Удалить</a>
+                <td >
+                    <a class="btn btn-primary m-2" th:href="@{'/answers/edit/' + ${ans.id}}">Изменить</a>
+                    <a class="btn btn-danger"  th:href="@{'/answers/delete/' + ${ans.id}}">Удалить</a>
                 </td>
             </tr>
             </th:block>
@@ -48,8 +51,16 @@
         </table>
 
 
+
+
     </div>
 
 </div>
 </body>
+<script type="text/javascript">
+    function cancelForm(){
+        window.location = "[[@{/}]]";
+    }
+
+</script>
 </html>

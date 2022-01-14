@@ -23,6 +23,8 @@ public class Answer {
     @Column(name = "correct_answer")
     private boolean correctAnswer;
 
+
+    private int questionId;
     public Answer() {
     }
 
@@ -63,5 +65,13 @@ public class Answer {
 
     public void setAnswerName(String answerName) {
         this.answerName = answerName;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 }

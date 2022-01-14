@@ -2,8 +2,11 @@ package com.kosimovrustam.jt.javatest.controller;
 
 
 import com.kosimovrustam.jt.javatest.entity.Answer;
+import com.kosimovrustam.jt.javatest.entity.Question;
 import com.kosimovrustam.jt.javatest.exception.AnswerNotFoundException;
+import com.kosimovrustam.jt.javatest.exception.QuestionNotFoundException;
 import com.kosimovrustam.jt.javatest.service.AnswerService;
+import com.kosimovrustam.jt.javatest.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,9 @@ public class AnswerController {
     @Autowired
     private AnswerService answerService;
 
+    @Autowired
+    private QuestionService questionService;
+
     @RequestMapping(value = "/answers", method = RequestMethod.GET)
     public String showAllAnswers(Model model) {
         List<Answer> allAnswers = answerService.getAllAnswers();
@@ -27,6 +33,9 @@ public class AnswerController {
 
     @GetMapping("/answers/new")
     public String showNewForm(Model model) {
+
+        List<Question> allQuestions = questionService.getAllQuestions();
+        model.addAttribute("allQuestions", allQuestions);
         model.addAttribute("answer", new Answer());
         model.addAttribute("pageTitle", "Добавление нового Ответа");
         return "answer_form";
@@ -34,7 +43,9 @@ public class AnswerController {
 
 
     @PostMapping("/answers/save")
-    public String saveAnswer(Answer answer, RedirectAttributes redirectAttributes) {
+    public String saveAnswer(Answer answer, RedirectAttributes redirectAttributes) throws QuestionNotFoundException {
+        int questionId = answer.getQuestionId();
+        answer.setQuestion(questionService.getQuestion(questionId));
         answerService.saveAnswer(answer);
         redirectAttributes.addFlashAttribute("message", "Ответ добавлен успешно.");
         return "redirect:/answers";
@@ -45,7 +56,8 @@ public class AnswerController {
 
         try {
             Answer answer = answerService.getAnswer(id);
-
+            List<Question> allQuestions = questionService.getAllQuestions();
+            model.addAttribute("allQuestions", allQuestions);
             model.addAttribute("answer", answer);
             model.addAttribute("pageTitle", "Изменение Ответа (ID: "+ id+")");
             return "answer_form";

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>[[${pageTitle}]]</title>
@@ -10,31 +10,43 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="text-center"><h2>[[${pageTitle}]]</h2></div>
+    <div class="text-center shadow-sm mb-5"><h2>[[${pageTitle}]]</h2>
+        <div class="fs-3 ">
+             Правильных ответов: [[${count}]]
+        </div>
+    </div>
 
-    <form  method="get"
+    <form method="post" th:action="@{/test/checkAnswer}"
           style="max-width: 1500px; margin: 0 auto;">
         <ul class="list-group">
             <li class="list-group-item">[[${questionName}]]</li>
         </ul>
-        <th:block th:each="ans : ${answersForRandomQuestionList}">
+        <th:block th:each="ans : ${answersForRandomQuestionList}" id="ans">
             <div class="input-group mb-3">
-                <div class="input-group-prepend m-3" >
-                <div class="input-group-text">
-                    <input type="checkbox" aria-label="Checkbox for following text input">
-                </div>
+                <div class="input-group-prepend" >
+
                 <tr>
-                    <td>[[${ans.answerName}]]</td>
+                    <div class="shadow p-3  bg-white rounded"> <td>[[${ans.answerName}]]</td> </div>
                 </tr>
+                    <div class="input-group-text">
+                        <a class="btn btn-primary" th:href="@{'/test/checkAnswer/' + ${ans.id}}">
+                            Правильный Ответ
+                        </a>
+                    </div>
             </div>
             </div>
         </th:block>
+
+        <div class="d-grid gap-2">
+            <button class="btn btn-primary" type="button">Далее</button>
+            <button type="button" class="btn btn-secondary" onclick="cancelForm()">Назад</button>
+        </div>
     </form>
 
 </div>
 <script type="text/javascript">
     function cancelForm(){
-        window.location = "[[@{/chapters}]]";
+        window.location = "[[@{/homePageTest}]]";
     }
 </script>
 
