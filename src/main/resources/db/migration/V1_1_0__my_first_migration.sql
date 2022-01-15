@@ -1,5 +1,4 @@
 USE jtdatabase;
-DROP TABLE flyway_shema_history;
 
 CREATE TABLE chapters (
                           id INT AUTO_INCREMENT,
