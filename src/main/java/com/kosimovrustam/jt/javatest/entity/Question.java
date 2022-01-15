@@ -23,9 +23,10 @@ public class Question {
     @JoinColumn(name = "chapter")
     private Chapter chapter;
 
+
+    @Column(name = "chapter_id")
     private int chapterId;
 
-    private String chapterName;
 
     public Question() {
     }
@@ -34,7 +35,7 @@ public class Question {
     public Question(String question, Chapter chapter) {
         this.questionName = question;
         this.chapter = chapter;
-        this.chapterName = chapter.getName();
+        chapterId = chapter.getId();
     }
 
     public int getId() {
@@ -70,11 +71,4 @@ public class Question {
         this.chapterId = chapterId;
     }
 
-    public String getChapterName() {
-        return chapterName;
-    }
-
-    public void setChapterName(String chapterName) {
-        this.chapterName = chapterName;
-    }
 }

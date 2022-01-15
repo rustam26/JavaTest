@@ -23,8 +23,9 @@ public class Answer {
     @Column(name = "correct_answer")
     private boolean correctAnswer;
 
-
+    @Column(name = "question_id")
     private int questionId;
+
     public Answer() {
     }
 

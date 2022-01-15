@@ -15,10 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 public class TestController {
@@ -46,12 +43,25 @@ public class TestController {
     public String Test(Model model) {
 
         List<Answer> answersForRandomQuestionList = new ArrayList<>();
-        List<Question> questionList = questionService.getAllQuestions();
+        List<Question> questionListAll = questionService.getAllQuestions();
+        List<Question> questionList = new ArrayList<>();
+        List<Answer> answerList = answerService.getAllAnswers();
+
+        for (int i = 0; i < answerList.size(); i++) {
+            for (int j = 0; j < questionListAll.size(); j++) {
+                if (answerList.get(i).getQuestion().getId() == questionListAll.get(j).getId()){
+                    questionList.add(questionListAll.get(j));
+                }
+
+            }
+
+        }
+
         double randomQuestion = Math.random() * ((questionList.size() - 1) - 0) + 0;
 
         Question questionRandom = questionList.get((int) Math.round(randomQuestion));
 
-        List<Answer> answerList = answerService.getAllAnswers();
+
 
 
         for(Answer answer:answerList){
@@ -60,6 +70,7 @@ public class TestController {
                 answersForRandomQuestionList.add(answer);
             }
         }
+        Collections.shuffle(answersForRandomQuestionList);
 
 
         model.addAttribute("answersForRandomQuestionList", answersForRandomQuestionList);
@@ -79,6 +90,8 @@ public class TestController {
         }
             return "redirect:/test";
     }
+
+
 
 
 }
